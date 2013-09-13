@@ -31,7 +31,7 @@ class URLSegmented extends DataExtension {
 		parent::__construct();
 	}
 
-	function extraStatics($class = null, $extension = null) {
+	public static function get_extra_config($class, $extension, $args) {
 		return array(
 			"db" => array(
 				"URLSegment" => "Varchar"
@@ -58,7 +58,7 @@ class URLSegmented extends DataExtension {
 	function generateURLSegment() {
 		$titleField = $this->TitleField;
 		if(!$title = $this->owner->$titleField) {
-			$title = "product-{$this->owner->ID}";
+			$title = $this->owner->i18n_singular_name()."-".$this->owner->ID;
 		}
 		return $title;
 	}
