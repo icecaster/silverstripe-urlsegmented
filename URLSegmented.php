@@ -34,7 +34,7 @@ class URLSegmented extends DataExtension {
 	public static function get_extra_config($class, $extension, $args) {
 		return array(
 			"db" => array(
-				"URLSegment" => "Varchar"
+				"URLSegment" => "Varchar(255)"
 			),
 			"indexes" => array(
 				"URLSegment" => true
