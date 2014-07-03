@@ -121,6 +121,7 @@ class URLSegmented extends DataExtension {
 class URLSegmented_DataListExtension extends Extension {
 
 	function byURL($url) {
+		$url_sql = Convert::raw2sql($url);
 		$baseClass = ClassInfo::baseDataClass($this->owner->dataClass);
 
 		$sgl = $baseClass::create();
@@ -130,7 +131,8 @@ class URLSegmented_DataListExtension extends Extension {
 			trigger_error("{$baseClass} doesnt have the required {$required_extension} extension");
 		}
 		$list = clone $this->owner;
-		return $list->where("\"$baseClass\".\"URLSegment\" = '{$url}'")->First();
+		$where = "\"{$baseClass}\".\"URLSegment\" = '{$url_sql}'";
+		return $list->where($where)->First();
 	}
-
+	
 }
