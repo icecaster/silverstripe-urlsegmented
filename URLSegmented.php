@@ -56,6 +56,9 @@ class URLSegmented extends DataExtension {
 	 * just a simple method that sets a default url segment title
 	 */
 	function generateURLSegment() {
+		if(method_exists($this->owner, "generateURLSegment")) {
+			return $this->owner->generateURLSegment();
+		}
 		$titleField = $this->TitleField;
 		if(!$title = $this->owner->$titleField) {
 			$title = $this->owner->i18n_singular_name()."-".$this->owner->ID;
