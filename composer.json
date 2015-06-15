@@ -1,5 +1,5 @@
 {
-	"name": "silverstripe/urlsegmented",
+	"name": "icecaster/urlsegmented",
 	"description": "simple extension to allow a unique urlsegment field to dataobjects",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "urlsegment"],
