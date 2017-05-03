@@ -1,5 +1,5 @@
 {
-	"name": "icecaster/urlsegmented",
+	"name": "icecaster/silverstripe-urlsegmented",
 	"description": "simple extension to allow a unique urlsegment field to dataobjects",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "urlsegment"],
@@ -9,7 +9,6 @@
 		"email": "tim@dodat.co.nz"
 	}],
 	"require": {
-		"silverstripe/framework": ">=3.1.0",
-		"silverstripe/cms": ">=3.1.0"
+	        "silverstripe/framework": "~3.1",
 	}
 }
