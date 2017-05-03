@@ -40,7 +40,7 @@ class URLSegmented extends DataExtension {
 				"URLSegment" => true
 			),
 			"field_labels" => array(
-				"URLSegment" => "{$class} URL"
+				"URLSegment" => "URL Segment"
 			)
 		);
 	}
