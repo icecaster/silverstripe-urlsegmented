@@ -9,6 +9,6 @@
 		"email": "tim@dodat.co.nz"
 	}],
 	"require": {
-	        "silverstripe/framework": "~3.1",
+	        "silverstripe/framework": "~3.1"
 	}
 }
