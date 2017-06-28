@@ -1,3 +1,3 @@
 <?php
 
-Object::add_extension("DataList", "URLSegmented_DataListExtension");
+SilverStripe\ORM\DataList::add_extension("URLSegmented_DataListExtension");

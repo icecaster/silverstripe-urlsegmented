@@ -13,13 +13,16 @@
  * If you'd like to make use of the DataList::get()->byURL($URLSegment) helper, add this line to your _config
  * Object::add_extension("DataList", "URLSegmented_DataListExtension");
  *
- * PHP version 5.3+
- *	
- * @package    catalog
  * @author     Tim Klein<tim[at]dodat.co.nz>
- * @copyright  2013 Dodat Ltd.
+ * @copyright  2017 Dodat Ltd.
  */
-class URLSegmented extends DataExtension {
+
+use SilverStripe\Core\Extension;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\DataList;
+use SilverStripe\View\Parsers\URLSegmentFilter;
+
+class URLSegmented extends Extension {
 
 	private $Scope;
 	private $TitleField;
