@@ -100,7 +100,7 @@ class URLSegmented extends Extension {
 
 		//avoid returning itself
 		if($this->owner->ID) {
-			$check = $check->where("ID !='{$this->owner->ID}'");
+			$check = $check->where("{$class}.ID !='{$this->owner->ID}'");
 		}
 
 		return (bool)$check->Count();
@@ -127,8 +127,8 @@ class URLSegmented extends Extension {
 class URLSegmented_DataListExtension extends Extension {
 
 	function byURL($url) {
-		$url_sql = Convert::raw2sql($url);
-		$baseClass = ClassInfo::baseDataClass($this->owner->dataClass);
+		$url_sql = SilverStripe\Core\Convert::raw2sql($url);
+		$baseClass = SilverStripe\Core\ClassInfo::baseDataClass($this->owner->dataClass);
 
 		$sgl = $baseClass::create();
 		$required_extension = "URLSegmented";
