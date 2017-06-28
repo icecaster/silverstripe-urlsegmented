@@ -9,7 +9,7 @@
 		"email": "tim@dodat.co.nz"
 	}],
 	"require": {
-	        "silverstripe/framework": "~4.0.0"
+	        "silverstripe/framework": "^4@dev"
 	},
 	"extra": {
 		"installer-name": "urlsegmented"
