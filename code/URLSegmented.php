@@ -93,14 +93,14 @@ class URLSegmented extends Extension {
 		$check = $class::get();
 
 		//base query
-		$check = $check->where("URLSegment='{$urlSegment}'");
+		$check = $check->filter("URLSegment", $urlSegment);
 
 		//check within scope
 		$check = $this->addScopeCheck($check);
 
 		//avoid returning itself
 		if($this->owner->ID) {
-			$check = $check->where("{$class}.ID !='{$this->owner->ID}'");
+			$check->exclude("ID", $this->owner->ID);
 		}
 
 		return (bool)$check->Count();
@@ -110,7 +110,7 @@ class URLSegmented extends Extension {
 		$scopeField = $this->Scope;		
 		if($scopeField && ($scopeValue = $this->owner->$scopeField)) {
 			//$list = clone $list;
-			return $list->where("{$scopeField}='{$scopeValue}'");
+			return $list->filter($scopeField, $scopeValue);
 		}
 		return $list;
 	}
