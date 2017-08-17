@@ -100,7 +100,7 @@ class URLSegmented extends Extension {
 
 		//avoid returning itself
 		if($this->owner->ID) {
-			$check->exclude("ID", $this->owner->ID);
+			$check = $check->exclude("ID", $this->owner->ID);
 		}
 
 		return (bool)$check->Count();
