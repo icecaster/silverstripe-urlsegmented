@@ -1,11 +1,11 @@
 <?php
 /**
  * URLSegmented
- * 
+ *
  * Takes care of adding an unique url segment to dataobjects
- * 
- * attach either via 
- * static $extensions = array("URLSegmented"); 
+ *
+ * attach either via
+ * static $extensions = array("URLSegmented");
  * from within a DataObject or via
  * Object::add_extension("MyDataObject", "URLSegmented");
  * from your _config.php
@@ -14,7 +14,7 @@
  * Object::add_extension("DataList", "URLSegmented_DataListExtension");
  *
  * PHP version 5.3+
- *	
+ *
  * @package    catalog
  * @author     Tim Klein<tim[at]dodat.co.nz>
  * @copyright  2013 Dodat Ltd.
@@ -48,7 +48,7 @@ class URLSegmented extends DataExtension {
 
 	function onBeforeWrite() {
 		if(!$this->owner->URLSegment) {
-			$this->owner->URLSegment = $this->generateURLSegment();
+			$this->setURLSegment($this->generateURLSegment());
 		}
 	}
 
@@ -74,10 +74,13 @@ class URLSegmented extends DataExtension {
 	function setURLSegment($value) {
 		$urlSegment = URLSegmentFilter::create()->filter($value);
 
-		while($this->existsInScope($urlSegment)) {
-			$urlSegment = $urlSegment.rand(1,9);
+		$i = 1;
+		$curr = $urlSegment;
+		while($this->existsInScope($curr)) {
+			$curr = $urlSegment.$i;
+			$i++;
 		}
-		$this->owner->setField("URLSegment", $urlSegment);
+		$this->owner->setField("URLSegment", $curr);
 	}
 
 	/**
@@ -85,26 +88,26 @@ class URLSegmented extends DataExtension {
 	 * returns bool
 	 */
 	function existsInScope($urlSegment) {
-		$class = get_class($this->owner);
+		$class = ClassInfo::baseDataClass(get_class($this->owner));
 
-		$check = $class::get();
+		$list = DataList::create($class);
 
 		//base query
-		$check = $check->where("URLSegment='{$urlSegment}'");
+		$list = $list->filter("URLSegment", $urlSegment);
 
 		//check within scope
-		$check = $this->addScopeCheck($check);
+		$list = $this->addScopeCheck($list);
 
 		//avoid returning itself
-		if($this->owner->ID) {
-			$check = $check->where("ID !='{$this->owner->ID}'");
+		if($id = $this->owner->ID) {
+			$list = $list->exclude("ID", $id);
 		}
 
-		return (bool)$check->Count();
+		return (bool)$list->Count();
 	}
 
 	function addScopeCheck(DataList $list) {
-		$scopeField = $this->Scope;		
+		$scopeField = $this->Scope;
 		if($scopeField && ($scopeValue = $this->owner->$scopeField)) {
 			//$list = clone $list;
 			return $list->where("{$scopeField}='{$scopeValue}'");
@@ -114,11 +117,11 @@ class URLSegmented extends DataExtension {
 
 }
 
-/** 
+/**
 * While this is somewhat ugly
 * it is the only way of currently (26/09/12) adding custom DataList getter-methods
 * This way you can do a DO::get()->byURL($URL)
-* attach via 
+* attach via
 * Object::add_extension("DataList", "URLSegmented_DataListExtension");
 **/
 class URLSegmented_DataListExtension extends Extension {
@@ -137,5 +140,5 @@ class URLSegmented_DataListExtension extends Extension {
 		$where = "\"{$baseClass}\".\"URLSegment\" = '{$url_sql}'";
 		return $list->where($where)->First();
 	}
-	
+
 }
